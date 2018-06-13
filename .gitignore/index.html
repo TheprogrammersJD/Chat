@@ -1,6 +1,6 @@
 <html><head>
     <meta charset="utf-8">
-    <title>Multiplayer RPG</title>
+    <title>CHAT</title>
     <!--<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js"></script>-->
 </head>
@@ -21,9 +21,6 @@
 	padding: 0;
 }*/
 </style>
-<!--<label>Nickname:</label>
-<input id = "name" value = "anonymous" type = "text" placeholder = "anonymous" autofocus></input>
-<button onClick = "nickname()">PLAY</button>-->
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <!--script src="https://code.jquery.com/jquery-1.11.1.js"></script-->
 <script>/*!
@@ -8461,30 +8458,33 @@ var mySocketID = Math.round(((Math.random() + 1) * 10000))*Math.round(Math.rando
 var adjectives = ["red", "orange", "yellow", "green", "blue", "purple", "black", "pink", "brown", "raging", "ferocious", "awesome", "stinky", "camouflaged", "jumpy", "plastic", "sticky", "trapped", "metal", "furry", "sleeping", "snoring", "running", "walking", "crazy", "fighting", "flying", "gliding", "happy", "sad", "eating", "working", "typing", "climbing", "WORKING", "colorful", "typical", "common", "rare", "dirty", "clean", "proper", "rich", "poor", "loving", "wooden", "paper", "fake", "sneaky", "sly", "broken", "convicted", "young", "old", "aged", "firey", "burnt", "ancient", "unearthed", "discovered", "fluttering", "shivering", "lazy", "honest", "deceitful", "robotic", "burning", "smoking", "legendary", "contented", "talkative", "ridiculous", "colonial", "fabric", "fabricated", "squishy", "squished", "blank", "electronic", "pennyless", "broke", "burping", "lethargic", "shaking", "sick", "flowery", "frozen", "spinning", "fat", "rotating", "obese", "overweight", "worthless"];
 var nouns = ["bear", "lion", "man", "car", "panda", "tiger", "cat", "dog", "hamster", "PROGRAMMER", "gamer", "employee", "employer", "thief", "theif", "firefighter", "wind", "boat", "sea", "gunner", "space", "air", "mouse", "kitten", "scab", "pizza", "ice-cream", "chocolate", "grapes", "horse", "government", "president", "leader", "convict", "ball", "treasure", "pearl", "gem", "chest", "box", "apple", "block", "snake", "bird", "ship", "tulip", "coupon", "pauper", "prince", "princess", "king", "queen", "peasant", "musician", "knight", "castle", "chimney", "chimneysweep", "slave", "servant", "advertisement", "mushroom", "manager", "dancer", "giraffe", "mermaid", "unicorn", "dragon", "book"];
 var nickname = adjectives[(Math.ceil(Math.random()*adjectives.length))-1]+"-"+nouns[(Math.ceil(Math.random()*nouns.length))-1]+"-"+(Math.ceil(Math.random()*1000));
-var myposx = 0;
-var myposy = 0;
+///var myposx = 0;
+///var myposy = 0;
 var playersx = [];
 var playersy = [];
-var playerr = [];
-var playerg = [];
-var playerb = [];
+///var playerr = [];
+///var playerg = [];
+///var playerb = [];
 var playersalive = [];
-var play = false;
+///var play = false;
 var socketids = [];
 var nicknames = [];
-var playersmass = [];
-var mapsize = 5;
-var youDed = false;
-var youDead = false;
-var youreater;
-var view = 1;
-var size;
-var buggeesx = [];
-var buggeesy = [];
-var buggeesr = [];
-var buggeesg = [];
-var buggeesb = [];
-var buggeesalive = [];
+///var playersmass = [];
+///var mapsize = 5;
+///var youDed = false;
+///var youDead = false;
+///var youreater;
+///var view = 1;
+///var size;
+///var buggeesx = [];
+///var buggeesy = [];
+///var buggeesr = [];
+///var buggeesg = [];
+///var buggeesb = [];
+///var buggeesalive = [];
+	
+	
+	
 /*function nickname(){
 	nickname = $("#name").val();
 	play = true;
@@ -8514,58 +8514,58 @@ function setup(){
 function draw(){
 	//size = (playersmass[socketids.indexOf(mySocketID)]*2)/3;
 	if(playersalive[socketids.indexOf(mySocketID)] == true){
-		view = (1/(widthorheight/playersmass[socketids.indexOf(mySocketID)]))*5;
+		///view = (1/(widthorheight/playersmass[socketids.indexOf(mySocketID)]))*5;
 	}
 	else{
-		view = (1/(widthorheight/playersmass[socketids.indexOf(youreater)]))*5;
+		///view = (1/(widthorheight/playersmass[socketids.indexOf(youreater)]))*5;
 	}
 	//Math.log10(playersmass[socketids.indexOf(mySocketID)]);
 	background(255, 255, 255);
 	//fill(123.0000003568888888888658547846, 34, 78);
 	//ellipse(mouseX, mouseY, (widthorheight/10), (widthorheight/10));
-	move(mouseX, mouseY);
-	if(youDed == false){
-		translate((((-1)*myposx/view) + (widthorheight/2)), (((-1)*myposy/view) + (widthorheight/2)));
-	}
-	else{
-		translate((((-1)*playersx[socketids.indexOf(youreater)]/view) + (widthorheight/2)), (((-1)*playersy[socketids.indexOf(youreater)]/view) + (widthorheight/2)));
-		youDead = true;
-		myposx = playersx[socketids.indexOf(youreater)];
-		myposy = playersy[socketids.indexOf(youreater)];
-	}
-	for(var w = (-1000)*mapsize/view; w < (1000)*mapsize/view; w += 100/view){
-		strokeWeight(1);
-		stroke(0, 255, 255);
-		
-		//The grid x
-		if(w < myposx/view + (widthorheight/2)&&w > myposx/view - (widthorheight/2)){
-			line(w, 1000 * mapsize/view, w, -1000 * mapsize/view);
-		}
-		noStroke();
-	}
-	for(var y = (-1000)*mapsize/view; y < (1000)*mapsize/view; y += 100/view){
-		strokeWeight(1);
-		stroke(0, 255, 255);
-		
-		//The grid y
-		if(y < myposy/view + (widthorheight/2)&&y > myposy/view - (widthorheight/2)){
-			line(-1000 * mapsize/view, y, 1000 * mapsize/view, y);
-		}
-		noStroke();
-	}
-	for(var buuu = 0; buuu < buggeesalive.length; buuu++){
-		if(buggeesalive[buuu] == true){
-			if(buggeesx[buuu]/view < myposx/view + (widthorheight/2)&&buggeesx[buuu]/view > myposx/view - (widthorheight/2)&&buggeesy[buuu]/view < myposy/view + (widthorheight/2)&&buggeesy[buuu]/view > myposy/view - (widthorheight/2)){
-				fill(buggeesr[buuu], buggeesg[buuu], buggeesb[buuu]);
-				ellipse(buggeesx[buuu]/view, buggeesy[buuu]/view, (widthorheight/30)/view, (widthorheight/30)/view);
-				fill(0, 0, 0, 0);
-				/*strokeWeight(1);
-				stroke(0, 0, 0);
-				ellipse(buggeesx[buuu], buggeesy[buuu], 50, 50);
-				noStroke();*/
-			}
-		}
-	}
+	///move(mouseX, mouseY);
+	///if(youDed == false){
+	///	translate((((-1)*myposx/view) + (widthorheight/2)), (((-1)*myposy/view) + (widthorheight/2)));
+	///}
+	///else{
+	///	translate((((-1)*playersx[socketids.indexOf(youreater)]/view) + (widthorheight/2)), (((-1)*playersy[socketids.indexOf(youreater)]/view) + (widthorheight/2)));
+	///	youDead = true;
+	///	myposx = playersx[socketids.indexOf(youreater)];
+	///	myposy = playersy[socketids.indexOf(youreater)];
+	///}
+	///for(var w = (-1000)*mapsize/view; w < (1000)*mapsize/view; w += 100/view){
+	///	strokeWeight(1);
+	///	stroke(0, 255, 255);
+	///	
+	///	//The grid x
+	///	if(w < myposx/view + (widthorheight/2)&&w > myposx/view - (widthorheight/2)){
+	///		line(w, 1000 * mapsize/view, w, -1000 * mapsize/view);
+	///	}
+	///	noStroke();
+	///}
+	///for(var y = (-1000)*mapsize/view; y < (1000)*mapsize/view; y += 100/view){
+	///	strokeWeight(1);
+	///	stroke(0, 255, 255);
+	///	
+	///	//The grid y
+	///	if(y < myposy/view + (widthorheight/2)&&y > myposy/view - (widthorheight/2)){
+	///		line(-1000 * mapsize/view, y, 1000 * mapsize/view, y);
+	///	}
+	///	noStroke();
+	///}
+	///for(var buuu = 0; buuu < buggeesalive.length; buuu++){
+	///	if(buggeesalive[buuu] == true){
+	///		if(buggeesx[buuu]/view < myposx/view + (widthorheight/2)&&buggeesx[buuu]/view > myposx/view - (widthorheight/2)&&buggeesy[buuu]/view < myposy/view + (widthorheight/2)&&buggeesy[buuu]/view > myposy/view - (widthorheight/2)){
+	///			fill(buggeesr[buuu], buggeesg[buuu], buggeesb[buuu]);
+	///			ellipse(buggeesx[buuu]/view, buggeesy[buuu]/view, (widthorheight/30)/view, (widthorheight/30)/view);
+	///			fill(0, 0, 0, 0);
+	///			/*strokeWeight(1);
+	///			stroke(0, 0, 0);
+	///			ellipse(buggeesx[buuu], buggeesy[buuu], 50, 50);
+	///			noStroke();*/
+	///		}
+	///	}
+	///}
 	//for(var w = Math.abs(myposx) - ((widthorheight/4)/(widthorheight/10)); w < (Math.abs(myposx)/(widthorheight/10)) + ((widthorheight/4)/(widthorheight/10)); w++){
 		//strokeWeight(1);
 		//stroke(0, 255, 255);
@@ -8597,27 +8597,27 @@ function draw(){
 			}
 		}
 	}
-	if(youDead == false){
-		translate((((1)*myposx/view) - (widthorheight/2)), (((1)*myposy/view) - (widthorheight/2)));
-	}
-	else{
-		translate((((1)*playersx[socketids.indexOf(youreater)]/view) - (widthorheight/2)), (((1)*playersy[socketids.indexOf(youreater)]/view) - (widthorheight/2)));
-	}
+	///if(youDead == false){
+	///	translate((((1)*myposx/view) - (widthorheight/2)), (((1)*myposy/view) - (widthorheight/2)));
+	///}
+	///else{
+	///	translate((((1)*playersx[socketids.indexOf(youreater)]/view) - (widthorheight/2)), (((1)*playersy[socketids.indexOf(youreater)]/view) - (widthorheight/2)));
+	///}
 	
-	if(youDead == false){
-		myposx = playersx[socketids.indexOf(mySocketID)];
-		myposy = playersy[socketids.indexOf(mySocketID)];
-	}
+	///if(youDead == false){
+	///	myposx = playersx[socketids.indexOf(mySocketID)];
+	///	myposy = playersy[socketids.indexOf(mySocketID)];
+	///}
 	//stroke(255, 255, 255);
 	//(widthorheight/10)*Math.log2(playersmass[socketids.indexOf(mySocketID)])/view
-	if(youDead == false){
-		fill(playerr[socketids.indexOf(mySocketID)], playerg[socketids.indexOf(mySocketID)], playerb[socketids.indexOf(mySocketID)]);
-		ellipse(widthorheight/2, widthorheight/2, (playersmass[socketids.indexOf(mySocketID)])/view, (playersmass[socketids.indexOf(mySocketID)])/view);
-		textAlign(CENTER, CENTER);
-		noStroke();
-		fill(0, 0, 0)
-		text(nickname + "\n" + playersmass[socketids.indexOf(mySocketID)], widthorheight/2, widthorheight/2);
-	}
+	///if(youDead == false){
+	///	fill(playerr[socketids.indexOf(mySocketID)], playerg[socketids.indexOf(mySocketID)], playerb[socketids.indexOf(mySocketID)]);
+	///	ellipse(widthorheight/2, widthorheight/2, (playersmass[socketids.indexOf(mySocketID)])/view, (playersmass[socketids.indexOf(mySocketID)])/view);
+	///	textAlign(CENTER, CENTER);
+	///	noStroke();
+	///	fill(0, 0, 0)
+	///	text(nickname + "\n" + playersmass[socketids.indexOf(mySocketID)], widthorheight/2, widthorheight/2);
+	///}
 	
 	
 	/*if(keyIsDown(LEFT_ARROW)){
@@ -8645,44 +8645,44 @@ function draw(){
 		movedown();
 	}*/
 	
-	strokeWeight(1);
-	stroke(0, 0, 0);
-	fill(255, 255, 255);
-	rect((widthorheight/9)*8, (widthorheight/9)*8, (widthorheight/15), (widthorheight/15));
-	noStroke();
+	///strokeWeight(1);
+	///stroke(0, 0, 0);
+	///fill(255, 255, 255);
+	///rect((widthorheight/9)*8, (widthorheight/9)*8, (widthorheight/15), (widthorheight/15));
+	///noStroke();
 	
-	translate((widthorheight/9)*8, (widthorheight/9)*8);
-	for(var pl = 0; pl < playersx.length; pl++){
-		if(playersalive[pl] == true){
-			if(pl == socketids.indexOf(mySocketID)){
-				strokeWeight(1);
-				stroke(0, 255, 0);
-				fill(0, 255, 0);
-				ellipse((playersx[pl]/((mapsize*2000)/(widthorheight/15)))*2, (playersy[pl]/((mapsize*2000)/(widthorheight/15)))*2, (playersmass[pl]/((mapsize*2000)/(widthorheight/15)))*2, (playersmass[pl]/((mapsize*2000)/(widthorheight/15)))*2);
-			}
-			else{
-				strokeWeight(1);
-				stroke(255, 0, 0);
-				fill(255, 0, 0);
-				ellipse((playersx[pl]/((mapsize*2000)/(widthorheight/15)))*2, (playersy[pl]/((mapsize*2000)/(widthorheight/15)))*2, (playersmass[pl]/((mapsize*2000)/(widthorheight/15)))*2, (playersmass[pl]/((mapsize*2000)/(widthorheight/15)))*2/*((mapsize*500)/((widthorheight/9)*8))*/);
-			}
-		}
-	}
-	translate((-widthorheight/9)*8, (-widthorheight/9)*8);
-	if(youDead == true){
-		background(0, 0, 0, 255/2);
-		fill(255, 255, 255);
-		strokeWeight(1);
-		stroke(255, 0, 0);
-		text("You were eaten...", widthorheight/2, widthorheight/3);
-		text("Click to respawn", widthorheight/2, widthorheight/3*2);
-		noStroke();
-	}
+	///translate((widthorheight/9)*8, (widthorheight/9)*8);
+	///for(var pl = 0; pl < playersx.length; pl++){
+	///	if(playersalive[pl] == true){
+	///		if(pl == socketids.indexOf(mySocketID)){
+	///			strokeWeight(1);
+	///			stroke(0, 255, 0);
+	///			fill(0, 255, 0);
+	///			ellipse((playersx[pl]/((mapsize*2000)/(widthorheight/15)))*2, (playersy[pl]/((mapsize*2000)/(widthorheight/15)))*2, (playersmass[pl]/((mapsize*2000)/(widthorheight/15)))*2, (playersmass[pl]/((mapsize*2000)/(widthorheight/15)))*2);
+	///		}
+	///		else{
+	///			strokeWeight(1);
+	///			stroke(255, 0, 0);
+	///			fill(255, 0, 0);
+	///			ellipse((playersx[pl]/((mapsize*2000)/(widthorheight/15)))*2, (playersy[pl]/((mapsize*2000)/(widthorheight/15)))*2, (playersmass[pl]/((mapsize*2000)/(widthorheight/15)))*2, (playersmass[pl]/((mapsize*2000)/(widthorheight/15)))*2/*((mapsize*500)/((widthorheight/9)*8))*/);
+	///		}
+	///	}
+	///}
+	///translate((-widthorheight/9)*8, (-widthorheight/9)*8);
+	///if(youDead == true){
+	///	background(0, 0, 0, 255/2);
+	///	fill(255, 255, 255);
+	///	strokeWeight(1);
+	///	stroke(255, 0, 0);
+	///	text("You were eaten...", widthorheight/2, widthorheight/3);
+	///	text("Click to respawn", widthorheight/2, widthorheight/3*2);
+	///	noStroke();
+	///}
 }
 function mousePressed(){
-	if(youDead == true){
-		window.location.reload();
-	}
+	//if(youDead == true){
+	//	window.location.reload();
+	//}
 }
 function random(min, max){
 	numtoreturn = max - min;
